@@ -11,6 +11,10 @@ call vundle#begin('~/some/path/here')
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'fisadev/vim-ctrlp-cmdpalette'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'stephpy/vim-php-cs-fixer'
+Plugin 'tpope/vim-surround'
 
 call vundle#end()
 
@@ -34,7 +38,7 @@ map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " files
-syntax enable           " enable syntax processing
+syntax on          " enable syntax processing
 filetype indent on      " load filetype-specific indent files
 
 " tabs
@@ -96,6 +100,27 @@ set modelines=1
 "    Use <c-y> to create a new file and its parent directories.
 "    Use <c-z> to mark/unmark multiple files and <c-o> to open them.
 
-nnoremap <leader>p :CtrlP<CR>
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_php_checkers = ['php']
+
+
+"php cs fixer
+let g:php_cs_fixer_rules = "@PSR2"
+
+let g:php_cs_fixer_php_path = "php"               " Path to PHP
+let g:php_cs_fixer_enable_default_mapping = 1     " Enable the mapping by default (<leader>pcd)
+let g:php_cs_fixer_dry_run = 0                    " Call command with dry-run option
+let g:php_cs_fixer_verbose = 0                    " Return the output of command if 1, else an inline informa
+
+
+nnoremap <leader>t :CtrlPTag<CR>
+nnoremap <leader>f :CtrlP<CR>
 nnoremap <leader>c :CtrlPCmdPalette<CR>
 " let g:ctrlp_cmdpalette_execute = 1
