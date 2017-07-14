@@ -1,6 +1,13 @@
 set nocompatible
 filetype off
 
+set tabstop=4
+set expandtab
+set shiftwidth=4
+set smartindent
+set number
+set rnu
+            
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
