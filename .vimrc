@@ -15,6 +15,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'stephpy/vim-php-cs-fixer'
 Plugin 'tpope/vim-surround'
+Plugin 'easymotion/vim-easymotion'
 
 call vundle#end()
 
@@ -58,6 +59,10 @@ set wildmenu            " visual autocomplete for command menu
 set showmatch           " highlight matching [{()}]
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
+"easy motion over the window
+map  <C-CR> <Plug>(easymotion-bd-w)
+nmap <C-CR> <Plug>(easymotion-overwin-w)
+
 nnoremap <leader><space> :nohlsearch<CR>
 
 " folding
