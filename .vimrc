@@ -72,12 +72,6 @@ nmap <C-CR> <Plug>(easymotion-overwin-w)
 
 nnoremap <leader><space> :nohlsearch<CR>
 
-" folding
-set foldnestmax=99 " 10 nested fold max
-" space open/closes folds
-nnoremap <space> za
-set foldmethod=indent   " fold based on indent level
-
 
 " movement
 " move vertically by visual line
