@@ -125,6 +125,8 @@ let g:php_cs_fixer_enable_default_mapping = 1     " Enable the mapping by defaul
 let g:php_cs_fixer_dry_run = 0                    " Call command with dry-run option
 let g:php_cs_fixer_verbose = 0                    " Return the output of command if 1, else an inline informa
 
+"Removes max files from ctrlp
+let g:ctrlp_max_files = 0
 
 nnoremap <leader>t :CtrlPTag<CR>
 nnoremap <leader>f :CtrlP<CR>
