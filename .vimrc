@@ -164,3 +164,8 @@ elseif stridx(getcwd(), 'admin') > 0
     colorscheme desert
 endif
 set noeb vb t_vb=
+
+nnoremap <leader>t :CtrlPTag<CR>
+nnoremap <leader>f :CtrlP<CR>
+nnoremap <leader>c :CtrlPCmdPalette<CR>
+" let g:ctrlp_cmdpalette_execute = 1
