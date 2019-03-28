@@ -16,14 +16,27 @@
  
  " let Vundle manage Vundle, required
  Plugin 'VundleVim/Vundle.vim'
- Plugin 'kien/ctrlp.vim'
+ "allows for fuzzysearching in file
+ Plugin 'ggVGc/vim-fuzzysearch'
+ "awesome search tool
+ Plugin 'ctrlpvim/ctrlp.vim'
  Plugin 'fisadev/vim-ctrlp-cmdpalette'
+ "commenting tool
+ " [count]<leader>cc
  Plugin 'scrooloose/nerdcommenter'
- Plugin 'vim-syntastic/syntastic'
- Plugin 'stephpy/vim-php-cs-fixer'
+ " async language checker
+ Plugin 'w0rp/ale'
+
+ " Plugin 'stephpy/vim-php-cs-fixer'
+ " cs"' change surround from " to '
+ " ds" delete surrounding "
+ " ysiw[ surround word with [ ]
+ " visual select then S<div class="blah"> surrounds selection with <div class="blah">
  Plugin 'tpope/vim-surround'
- Plugin 'easymotion/vim-easymotion'
+ " Plugin 'easymotion/vim-easymotion'
  Plugin 'mattn/emmet-vim'
+ "csv tool
+ Plugin 'chrisbra/csv.vim'
  
  call vundle#end()
  
@@ -68,11 +81,13 @@
  set incsearch           " search as characters are entered
  set hlsearch            " highlight matches
  "easy motion over the window
- map  <C-CR> <Plug>(easymotion-bd-w)
- nmap <C-CR> <Plug>(easymotion-overwin-w)
+ " map  <C-CR> <Plug>(easymotion-bd-w)
+ " nmap <C-CR> <Plug>(easymotion-overwin-w)
  
  nnoremap <leader><space> :nohlsearch<CR>
  
+ "allows for fuzzysearching in file
+ noremap ff :FuzzySearch<CR>
  
  " movement
  " move vertically by visual line
@@ -108,14 +123,14 @@
  "    Use <c-z> to mark/unmark multiple files and <c-o> to open them.
  
  set statusline+=%#warningmsg#
- set statusline+=%{SyntasticStatuslineFlag()}
+ " set statusline+=%{SyntasticStatuslineFlag()}
  set statusline+=%*
  
- let g:syntastic_always_populate_loc_list = 1
- let g:syntastic_auto_loc_list = 1
- let g:syntastic_check_on_open = 1
- let g:syntastic_check_on_wq = 0
- let g:syntastic_php_checkers = ['php']
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_php_checkers = ['php']
  
  
  "php cs fixer
@@ -132,11 +147,6 @@
 :set ignorecase
 :set smartcase
 
- nnoremap tt :CtrlPTag<CR>
- nnoremap <leader>f :CtrlP<CR>
- nnoremap <leader>c :CtrlPCmdPalette<CR>
- " let g:ctrlp_cmdpalette_execute = 1
-let g:ctrlp_max_files = 0
  function! GetVisualSelection()
     " Why is this not a built-in Vim script function?!
     let [line_start, column_start] = getpos("'<")[1:2]
@@ -159,13 +169,44 @@ function! AddTextShow()
     setline(line_end, currentLine[0] + getVisualSelection() + currentLine[1]);
 endfunction
 if stridx(getcwd(), 'aptschat') > 0
+    colorscheme koehler
+    autocmd BufWritePost *.blade* :!php artisan compile-html
+elseif stridx(getcwd(), 'admin') > 0
+    colorscheme desert
+endif
+if stridx(getcwd(), 'laravel2') > 0
+    autocmd BufWritePost *ILSUnitresponse.blade* :!php artisan make:ils --propertyCode=VILLAGE1
+    autocmd BufWritePost *ILSUnitresponse.blade* :!cp ./storage/xml/* /home/brady/php-tests/php-validator/xmls/
+    autocmd BufWritePost *ILSUnitresponse.blade* :!wget http://localhost:8000/?bypass=1
+endif
+if stridx(getcwd(), 'golden') > 0
+    colorscheme desert
+    autocmd BufWritePost *.blade* :!php artisan compile-html
+elseif stridx(getcwd(), 'admin') > 0
+    colorscheme desert
+endif
+if stridx(getcwd(), 'local') > 0
     colorscheme elflord
+    autocmd BufWritePost *.blade* :!php artisan compile-html
 elseif stridx(getcwd(), 'admin') > 0
     colorscheme desert
 endif
 set noeb vb t_vb=
 
+"tell netrw to show file info by default
+let g:netrw_liststyle = 1
+let g:netrw_fastbrowse = 2
+
+
+ nnoremap tt :CtrlPTag<CR>
+ nnoremap <leader>f :CtrlP<CR>
+ nnoremap <leader>c :CtrlPCmdPalette<CR>
+ " let g:ctrlp_cmdpalette_execute = 1
+let g:ctrlp_max_files = 0
+
 nnoremap <leader>t :CtrlPTag<CR>
-nnoremap <leader>f :CtrlP<CR>
+nnoremap <leader>b :CtrlPBuffer<CR>
+nnoremap <leader>g :CtrlPLine<CR>
+"nnoremap <leader>f :CtrlP<CR>
 nnoremap <leader>c :CtrlPCmdPalette<CR>
 " let g:ctrlp_cmdpalette_execute = 1
