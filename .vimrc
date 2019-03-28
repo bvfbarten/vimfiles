@@ -69,14 +69,11 @@ set hlsearch            " highlight matches
 "easy motion over the window
 map  <C-CR> <Plug>(easymotion-bd-w)
 nmap <C-CR> <Plug>(easymotion-overwin-w)
+map  <C-m> <Plug>(easymotion-bd-w)
+nmap <C-m> <Plug>(easymotion-overwin-w)
 
 nnoremap <leader><space> :nohlsearch<CR>
 
-" folding
-set foldnestmax=99 " 10 nested fold max
-" space open/closes folds
-nnoremap <space> za
-set foldmethod=indent   " fold based on indent level
 
 
 " movement
@@ -121,6 +118,10 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_php_checkers = ['php']
+" search configs
+:set ignorecase
+:set smartcase
+let g:ctrlp_max_files = 0
 
 
 "php cs fixer
