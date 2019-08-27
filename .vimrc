@@ -21,9 +21,14 @@
  "awesome search tool
  Plugin 'ctrlpvim/ctrlp.vim'
  Plugin 'fisadev/vim-ctrlp-cmdpalette'
+ Plugin 'stefandtw/quickfix-reflector.vim'
  "commenting tool
- " [count]<leader>cc
+ " [count]<leader>cc 
+ " [count]<leader>c<space> toggles
  Plugin 'scrooloose/nerdcommenter'
+
+ " autocomplete?
+Plugin 'zxqfl/tabnine-vim'
  " async language checker
  Plugin 'w0rp/ale'
 
@@ -40,6 +45,21 @@
  
  call vundle#end()
  
+
+function! s:get_visual_selection()
+    " Why is this not a built-in Vim script function?!
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+        return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][column_start - 1:]
+    return join(lines, "\n")
+endfunction
+
+
  filetype plugin indent on
  
  
@@ -91,8 +111,8 @@
  
  " movement
  " move vertically by visual line
- nnoremap j gj
- nnoremap k gk
+ " nnoremap j gj
+ " nnoremap k gk
  
  
  " highlight last inserted text
@@ -175,9 +195,14 @@ elseif stridx(getcwd(), 'admin') > 0
     colorscheme desert
 endif
 if stridx(getcwd(), 'laravel2') > 0
+    autocmd BufWritePost *ILSUnitresponse.blade* :!php artisan make:ils --propertyCode=CANYON
+    autocmd BufWritePost *ILSUnitresponse.blade* :!cp ./storage/xml/* /home/brady/php-tests/php-validator/xmls/
+    autocmd BufWritePost *ILSUnitresponse.blade* :!rm ./index.html?bypass=xml-CANYON.xml
+    autocmd BufWritePost *ILSUnitresponse.blade* :!wget http://localhost:8000/?bypass=xml-CANYON.xml
     autocmd BufWritePost *ILSUnitresponse.blade* :!php artisan make:ils --propertyCode=VILLAGE1
     autocmd BufWritePost *ILSUnitresponse.blade* :!cp ./storage/xml/* /home/brady/php-tests/php-validator/xmls/
-    autocmd BufWritePost *ILSUnitresponse.blade* :!wget http://localhost:8000/?bypass=1
+    autocmd BufWritePost *ILSUnitresponse.blade* :!rm ./index.html?bypass=xml-VILLAGE1.xml
+    autocmd BufWritePost *ILSUnitresponse.blade* :!wget http://localhost:8000/?bypass=xml-VILLAGE1.xml
 endif
 if stridx(getcwd(), 'golden') > 0
     colorscheme desert
@@ -203,6 +228,7 @@ let g:netrw_fastbrowse = 2
  nnoremap <leader>c :CtrlPCmdPalette<CR>
  " let g:ctrlp_cmdpalette_execute = 1
 let g:ctrlp_max_files = 0
+
 
 nnoremap <leader>t :CtrlPTag<CR>
 nnoremap <leader>b :CtrlPBuffer<CR>
