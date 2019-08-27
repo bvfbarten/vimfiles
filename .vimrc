@@ -30,7 +30,9 @@
  " autocomplete?
 Plugin 'zxqfl/tabnine-vim'
  " async language checker
- Plugin 'w0rp/ale'
+ if v:version >= 800
+     " async language checker can only be ran on vim 8+
+     Plugin 'w0rp/ale'
 
  " Plugin 'stephpy/vim-php-cs-fixer'
  " cs"' change surround from " to '
