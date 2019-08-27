@@ -33,6 +33,7 @@ Plugin 'zxqfl/tabnine-vim'
  if v:version >= 800
      " async language checker can only be ran on vim 8+
      Plugin 'w0rp/ale'
+endif
 
  " Plugin 'stephpy/vim-php-cs-fixer'
  " cs"' change surround from " to '
